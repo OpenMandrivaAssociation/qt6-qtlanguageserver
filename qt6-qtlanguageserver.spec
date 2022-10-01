@@ -28,6 +28,9 @@ Qt %{major} network authentication module
 
 %qt6libs LanguageServer JsonRpc
 
+%define extra_devel_reqprov_LanguageServer \
+Requires:	cmake(Qt%{major}JsonRpcPrivate)
+
 %prep
 %autosetup -p1 -n qtlanguageserver%{!?snapshot:-everywhere-src-%{version}%{?beta:-%{beta}}}
 %cmake -G Ninja \
