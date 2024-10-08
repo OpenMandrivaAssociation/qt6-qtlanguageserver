@@ -1,11 +1,12 @@
 #define beta rc2
 #define snapshot 20200627
 %define major 6
+%undefine _debugsource_packages
 
 %define _qtdir %{_libdir}/qt%{major}
 
 Name:		qt6-qtlanguageserver
-Version:	6.7.3
+Version:	6.8.0
 Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtlanguageserver.git
@@ -26,10 +27,20 @@ License:	LGPLv3/GPLv3/GPLv2
 %description
 Qt %{major} network authentication module
 
-%qt6libs LanguageServer JsonRpc
+%define extra_devel_files_LanguageServer \
+%{_qtdir}/lib/cmake/Qt6BuildInternals/StandaloneTests/QtLanguageServerTestsConfig.cmake
 
+# These used to be shared libraries before 6.8.0
 %define extra_devel_reqprov_LanguageServer \
-Requires:	cmake(Qt%{major}JsonRpcPrivate)
+Requires:	cmake(Qt%{major}JsonRpcPrivate) \
+Obsoletes:	%{mklibname Qt6LanguageServer} < %{EVRD} \
+Obsoletes:	%{mklibname -d Qt6LanguageServer} < %{EVRD}
+
+%define extra_devel_reqprov_JsonRpc \
+Obsoletes:	%{mklibname Qt6JsonRpc} < %{EVRD} \
+Obsoletes:	%{mklibname -d Qt6JsonRpc} < %{EVRD}
+
+%qt6staticlibs LanguageServer JsonRpc
 
 %prep
 %autosetup -p1 -n qtlanguageserver%{!?snapshot:-everywhere-src-%{version}%{?beta:-%{beta}}}
