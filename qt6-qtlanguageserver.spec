@@ -35,11 +35,13 @@ Qt %{major} network authentication module
 %define extra_devel_reqprov_LanguageServer \
 Requires:	cmake(Qt%{major}JsonRpcPrivate) \
 Obsoletes:	%{mklibname Qt6LanguageServer} < %{EVRD} \
-Obsoletes:	%{mklibname -d Qt6LanguageServer} < %{EVRD}
+Obsoletes:	%{mklibname -d Qt6LanguageServer} < %{EVRD} \
+Provides:	cmake(Qt6LanguageServerPrivatePrivate) = %{EVRD}
 
 %define extra_devel_reqprov_JsonRpc \
 Obsoletes:	%{mklibname Qt6JsonRpc} < %{EVRD} \
-Obsoletes:	%{mklibname -d Qt6JsonRpc} < %{EVRD}
+Obsoletes:	%{mklibname -d Qt6JsonRpc} < %{EVRD} \
+Provides:	cmake(Qt6JsonRpcPrivatePrivate) = %{EVRD}
 
 %qt6staticlibs LanguageServer JsonRpc
 
